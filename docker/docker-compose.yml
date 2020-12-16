@@ -1,0 +1,44 @@
+version: "3.8"
+
+
+volumes:
+  postgres:
+  web_home: # The contents of /root, so that bash and ipython can store history
+
+services:
+
+  db:
+    image: postgres:12.3
+    volumes:
+      - postgres:/var/lib/postgresql/data:z
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: hind-base
+    environment:
+      FLASK_APP: hind.webserver
+      FLASK_ENV: development
+    command: flask run -h 0.0.0.0 -p 80
+    image: web
+    volumes:
+      - web_home:/root
+      - ..:/code/hind:z
+      - ../hind/webserver/static:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+
+  static_builder:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.webpack
+      target: hind-webpack-base
+    command: npm run build:dev
+    volumes:
+      - ../hind/webserver/static:/code/static:z
+      - ../hind/webserver/static:/static:z

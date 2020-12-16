@@ -1,0 +1,11 @@
+.git
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Javascript packages
+node_modules
+
+# Frontend build
+dist/
