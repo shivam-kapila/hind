@@ -43,20 +43,20 @@ def init_db(force, create_db):
         res = db.run_sql_script_without_transaction(os.path.join(ADMIN_SQL_DIR, 'create_extensions.sql'))
     # Don't raise an exception if the extension already exists
 
-    # application = webserver.create_app()
-    # with application.app_context():
-    #     print('PG: Creating schema...')
-    #     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_schema.sql'))
+    application = webserver.create_app()
+    with application.app_context():
+        # print('PG: Creating schema...')
+        # db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_schema.sql'))
 
-    #     print('PG: Creating tables...')
-    #     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_tables.sql'))
+        print('PG: Creating tables...')
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_tables.sql'))
 
-    #     print('PG: Creating primary and foreign keys...')
-    #     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_primary_keys.sql'))
-    #     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_foreign_keys.sql'))
+        print('PG: Creating primary keys...')
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_primary_keys.sql'))
+        # db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_foreign_keys.sql'))
 
-    #     print('PG: Creating indexes...')
-    #     db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_indexes.sql'))
+        print('PG: Creating indexes...')
+        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_indexes.sql'))
 
         print("Done!")
 
