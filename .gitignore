@@ -8,3 +8,6 @@ __pycache__/
 
 # Frontend build
 dist/
+
+# CSS files
+*.css
