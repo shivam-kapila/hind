@@ -4,7 +4,7 @@ RUN mkdir /code
 WORKDIR /code
 
 COPY package.json package-lock.json webpack.config.js babel.config.js tsconfig.json .eslintrc.js .gitignore /code/
-RUN npm install
+RUN npm install --loglevel verbose
 
 # When running in CI, we can't mount source into a container at runtime,
 # so we have a target here to add source to the image at build-time
