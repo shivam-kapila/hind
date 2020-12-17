@@ -14,7 +14,7 @@ function invoke_docker_compose {
 }
 
 function invoke_manage {
-    invoke_docker_compose run --rm web \
+    invoke_docker_compose run --rm hind_web \
             python3 manage.py \
             "$@"
 }
@@ -40,7 +40,7 @@ if [[ "$1" == "manage" ]]; then shift
 
 elif [[ "$1" == "bash" ]]; then
     echo "Running bash..."
-    invoke_docker_compose run --rm web bash
+    open_bash_shell
 
 elif [[ "$1" == "psql" ]]; then
     echo "Connecting to postgresql..."
