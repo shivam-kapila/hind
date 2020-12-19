@@ -11,3 +11,6 @@ ADMINS = []
 
 # expiration of 'Remember me' cookie
 SESSION_REMEMBER_ME_DURATION = 365
+
+# Set to True if Less should be compiled in browser. Set to False if styling is pre-compiled.
+COMPILE_LESS = True

@@ -1,7 +1,4 @@
 import os
-import pprint
-import sys
-from time import sleep
 
 from flask import Flask
 from flask_uuid import FlaskUUID
@@ -51,13 +48,11 @@ def create_app(config_path=None):
     app.context_processor(lambda: dict(get_static_path=static_manager.get_static_path))
     app.static_folder = '/static'
 
-    # _register_blueprints(app)
+    _register_blueprints(app)
 
     return app
 
 
 def _register_blueprints(app):
     from hind.webserver.views.index import index_bp
-    from hind.webserver.views.login import login_bp
     app.register_blueprint(index_bp)
-    app.register_blueprint(login_bp, url_prefix='/login')

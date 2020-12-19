@@ -34,7 +34,7 @@ WORKDIR /static
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json webpack.config.js tsconfig.json ./hind/webserver/static /static/
-RUN npm install --loglevel verbose && ./node_modules/sass/sass.js /static/css/main.scss /static/css/main.css --style compressed && \
+RUN npm install  --loglevel verbose && npm run build:prod && ./node_modules/less/bin/lessc --clean-css /static/css/main.less > /static/css/main.css && \
     rm -rf node_modules js/*.jsx *.json webpack.config.js && npm cache clean --force
 
 # Now install our code, which may change frequently

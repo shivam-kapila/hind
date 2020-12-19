@@ -20,7 +20,7 @@ module.exports = function (env) {
   return {
     mode: isProd ? "production" : "development",
     entry: {
-      main: "/static/js/src/RecentListens.tsx",
+      main: "/static/js/src/main.tsx",
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",
