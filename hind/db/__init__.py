@@ -1,16 +1,20 @@
 
+import logging
+import psycopg2
 import sqlalchemy
+import time
+
 from sqlalchemy import create_engine
 from sqlalchemy.pool import NullPool
-import time
-import psycopg2
-
 # This value must be incremented after schema changes on replicated tables!
 SCHEMA_VERSION = 1
 
 engine = None
 
 DUMP_DEFAULT_THREAD_COUNT = 4
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def init_db_connection(connect_str):

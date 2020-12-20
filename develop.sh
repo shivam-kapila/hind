@@ -14,7 +14,7 @@ function invoke_docker_compose {
 }
 
 function invoke_manage {
-    invoke_docker_compose run --rm hind_web \
+    invoke_docker_compose run --rm web \
             python3 manage.py \
             "$@"
 }

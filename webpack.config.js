@@ -21,6 +21,7 @@ module.exports = function (env) {
     mode: isProd ? "production" : "development",
     entry: {
       main: "/static/js/src/main.tsx",
+      auth: "/static/js/src/auth.tsx",
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",

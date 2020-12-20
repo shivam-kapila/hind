@@ -1,5 +1,8 @@
 BEGIN;
 
-DROP TABLE IF EXISTS "user"                         CASCADE;
+DROP TABLE IF EXISTS "user" CASCADE;
+DROP TABLE IF EXISTS blog.blog CASCADE;
+DROP TABLE IF EXISTS blog.likes CASCADE;
+DROP TABLE IF EXISTS blog.recommendations CASCADE;
 
 COMMIT;

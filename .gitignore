@@ -11,3 +11,6 @@ dist/
 
 # CSS files
 *.css
+
+# CF Outputs
+outputs

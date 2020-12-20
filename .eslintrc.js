@@ -27,6 +27,7 @@ module.exports = {
     "react/prop-tyes": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off",
+    "import/extensions": "off",
     camelcase: "warn",
     "prettier/prettier": "error",
     "lines-between-class-members": [

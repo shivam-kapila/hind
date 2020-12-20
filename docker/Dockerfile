@@ -23,8 +23,9 @@ WORKDIR /code
 RUN mkdir /code/hind
 WORKDIR /code/hind
 
-COPY requirements.txt /code/hind/
+COPY requirements.txt requirements_development.txt /code/hind/
 RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements_development.txt
 RUN useradd --create-home --shell /bin/bash hind
 
 RUN mkdir /static

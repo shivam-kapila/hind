@@ -1,7 +1,5 @@
--- BEGIN;
+BEGIN;
 
--- DROP SCHEMA IF EXISTS api_compat            CASCADE;
--- DROP SCHEMA IF EXISTS statistics            CASCADE;
--- DROP SCHEMA IF EXISTS recommendation        CASCADE;
+DROP SCHEMA IF EXISTS blog CASCADE;
 
--- COMMIT;
+COMMIT;
