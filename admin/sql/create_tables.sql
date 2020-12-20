@@ -6,7 +6,7 @@ CREATE TABLE "user" (
   user_name             VARCHAR,
   email_id              VARCHAR,
   about                 VARCHAR,
-  password_hash         VARCHAR,
+  password         VARCHAR,
   address               VARCHAR,
   created               TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   auth_token            VARCHAR

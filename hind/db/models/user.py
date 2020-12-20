@@ -1,8 +1,9 @@
 from datetime import datetime
 from pydantic import BaseModel
+from flask_login import UserMixin
 
 
-class User(BaseModel):
+class User(BaseModel, UserMixin):
     id: int = None
     name: str = None
     user_name: str

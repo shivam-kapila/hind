@@ -1,9 +1,9 @@
 import os
 
+import hind.db.user as db_user
 from flask import Flask
 from flask_uuid import FlaskUUID
-
-API_PREFIX = '/1'
+from flask_login import LoginManager
 
 
 def load_config(app):
@@ -24,6 +24,15 @@ def gen_app(config_path=None, debug=None):
     """
     app = Flask(import_name=__name__)
     FlaskUUID(app)
+
+    app.secret_key = os.urandom(24)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'index.login'
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return db_user.get_by_id(id=user_id)
 
     load_config(app)
 
@@ -55,4 +64,6 @@ def create_app(config_path=None):
 
 def _register_blueprints(app):
     from hind.webserver.views.index import index_bp
+    from hind.webserver.views.user import user_bp
     app.register_blueprint(index_bp)
+    app.register_blueprint(user_bp, url_prefix='/user')

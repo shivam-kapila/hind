@@ -1,5 +1,3 @@
-from recommendation_engine.model import MAX_BLOGS_TO_RECOMMEND
-import bcrypt
 import hind.db.blog as db_blog
 import hind.db.user as db_user
 
@@ -22,7 +20,7 @@ class SeedDB():
                         user_name=fake_user['username'],
                         email_id=fake_user['mail'],
                         about=fake.text(),
-                        password=bcrypt.hashpw(fake_user['username'].encode('utf-8'), bcrypt.gensalt()),
+                        password=fake_user['username'],
                         address=(fake_user['address']).replace("\n", " "),
                         )
 
