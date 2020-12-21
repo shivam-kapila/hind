@@ -33,6 +33,7 @@ class SeedDB():
                 blog = Blog(
                     title=fake.sentence(),
                     user_id=i,
+                    location=fake.address().replace("\n", " "),
                     category=fake.category(),
                     body=fake.text(),
                     tags=fake.tags(),

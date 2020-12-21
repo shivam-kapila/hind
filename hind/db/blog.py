@@ -64,10 +64,10 @@ def insert_recommendation(user_id: int, blog_id: int):
         })
 
 
-def get_blogs_and_tags():
+def get_blogs():
     with db.engine.connect() as connection:
         blogs = read_sql_query("""
-            SELECT id, LOWER(title) AS title, category, tags
+            SELECT id, LOWER(title) AS title, category, location, tags
             FROM blog.blog
         """, con=connection)
 

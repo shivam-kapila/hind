@@ -13,6 +13,7 @@ index_bp = Blueprint('index', __name__)
 def index():
     return render_template(
         "index/index.html",
+        class_name="landing"
     )
 
 
@@ -31,7 +32,6 @@ def login():
             login_user(user, remember=True, duration=timedelta(current_app.config['SESSION_REMEMBER_ME_DURATION']))
             flash.success('Hey there! Welcome back!')
             return redirect(url_for('user.index'))
-
 
         flash.error('Username or password incorrect! Please try again')
 

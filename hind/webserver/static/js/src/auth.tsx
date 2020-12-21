@@ -71,7 +71,7 @@ export default class AuthModal extends React.Component<
               </button>
             </form>
             <div className="mt-3 form-text">
-              Don't have an account?
+              Do not have an account?
               <button
                 type="button"
                 className="btn btn-inline"

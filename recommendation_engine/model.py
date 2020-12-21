@@ -13,19 +13,20 @@ OUTPUT_DIRECTORY = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ou
 
 class CFModel():
     def __init__(self):
-        self.blogs = db_blog.get_blogs_and_tags()
+        self.blogs = db_blog.get_blogs()
         self.curate_data()
         self.create_mapping()
 
     def curate_data(self):
         self.blogs['id'] = self.blogs['id'].astype('int')
-        self.blogs.columns = self.blogs.columns.str.replace(' ', '')
 
         self.blogs["title"] = self.blogs["title"].apply(lambda x: x.replace(".", ""))
         self.blogs["category"] = self.blogs["category"].apply(lambda x: x.replace(" ", ""))
+        self.blogs["location"] = self.blogs["category"].apply(lambda x: x.replace(" ", ""))
         self.blogs["tags"] = self.blogs["tags"].apply(lambda x: [i.replace(" ", "") for i in x])
 
-        self.blogs["metadata"] = self.blogs.apply(lambda x: " " + " ".join([x["category"]]) + " " + " ".join(x["tags"]), axis=1)
+        self.blogs["metadata"] = self.blogs.apply(lambda x: "" + " ".join([x["category"]]) +
+                                                  " ".join([x["location"]]) + " " + " ".join(x["tags"]), axis=1)
 
     def create_mapping(self):
         count_vec = CountVectorizer(stop_words="english")

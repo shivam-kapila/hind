@@ -1,6 +1,7 @@
 @import 'theme.less';
 @import 'base.less';
 @import 'auth.less';
+@import 'landing.less';
 
 .ml-auto {
     margin-left: auto;
@@ -17,9 +18,17 @@
     border-radius: 8px;
 }
 
-body {
-    font-family: Montserrat, sans-serif;
-    padding-bottom: 100px;
+html {
+    height: 100%;
+
+    body {
+        height: 100%;
+        margin: 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: Montserrat, sans-serif;
+        padding-bottom: 100px;
+    }
 }
 
 label {
@@ -37,9 +46,8 @@ textarea {
     background-color: @light-gray!important;
     color:@dark-gray;
     line-height: 27px!important;
-
+    padding: 10px;
 }
-
 
 input, textarea {
     &:extend(textarea);
@@ -55,7 +63,7 @@ input, textarea {
     padding: 10px;
 
     &:hover, :focus {
-        background-color: darken(@purple, 5%) !important;;
+        background-color: darken(@purple, 5%) !important;
     }
 }
 

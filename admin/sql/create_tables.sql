@@ -6,7 +6,7 @@ CREATE TABLE "user" (
   user_name             VARCHAR,
   email_id              VARCHAR,
   about                 VARCHAR,
-  password         VARCHAR,
+  password              VARCHAR,
   address               VARCHAR,
   created               TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   auth_token            VARCHAR
@@ -16,6 +16,7 @@ CREATE TABLE blog.blog (
   id                    SERIAL,
   user_id               INT, --FK to "user".id
   title                 VARCHAR,
+  location              VARCHAR,
   category              blog_category,
   body                  VARCHAR,
   upload_res_url        VARCHAR,

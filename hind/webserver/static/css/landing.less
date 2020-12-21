@@ -1,0 +1,66 @@
+
+body.landing {
+    background: @purple;
+    background: linear-gradient(150deg, rgba(118,98,231,1) 50%, rgba(200,64,245,1) 100%);
+    background-size: cover;
+    color: @white;
+    overflow: hidden;
+    
+    .navbar {
+        background-color: @purple;
+        box-shadow: none;
+
+        .navbar-brand {
+            color: @white;
+            
+            &:hover, .active{
+                color: @peach!important;
+            } 
+        }
+
+        .nav-link {
+            color: @white!important;
+
+            &:hover, .active{
+                color: @peach!important;
+            } 
+        }
+    }
+
+    .landing {
+        padding-top: 100px;
+        width: 100;
+        text-align: center;
+
+        > .brand {
+            font-family: Samarkan;
+            font-size: 80px;
+            margin-bottom: -10px;
+        }
+        
+        form {
+            padding-top: 20px;
+
+            input {
+                border-radius: 4px!important;
+                border: medium none!important;
+                box-sizing: border-box;
+                outline: currentcolor none medium;
+                color:@dark-gray;
+                line-height: 27px!important;
+            }
+            button {
+                border-radius: 100%;
+                background-color: @peach;
+                color: @white;
+                margin-left: 10px;
+                font-size: 30px;
+                padding: 0 10px;
+                border: none;
+            }
+        }
+        img {
+            padding-top: 150px;
+        }
+    }
+}

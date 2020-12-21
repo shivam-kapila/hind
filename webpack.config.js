@@ -22,6 +22,7 @@ module.exports = function (env) {
     entry: {
       main: "/static/js/src/main.tsx",
       auth: "/static/js/src/auth.tsx",
+      landing: "/static/js/src/landing.tsx",
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",
