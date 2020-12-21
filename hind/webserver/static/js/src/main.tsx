@@ -6,7 +6,7 @@ import APIService from "./APIService";
 
 type activeMode = "login" | "signup";
 
-export type AuthModalProps = {
+type AuthModalProps = {
   activeMode: activeMode;
 };
 
@@ -17,7 +17,7 @@ type AuthModalState = {
 export default class AuthModal extends React.Component<
   AuthModalProps,
   AuthModalState
-  > {
+> {
   APIService: APIService;
 
   constructor(props: AuthModalProps) {
@@ -28,50 +28,6 @@ export default class AuthModal extends React.Component<
       activeMode: props.activeMode,
     };
   }
-
-  // getFollowers = () => {
-  //   const { user } = this.props;
-  //   this.APIService.getFollowersOfUser(user.name).then(
-  //     ({ followers }: { followers: Array<{ musicbrainz_id: string }> }) => {
-  //       this.setState({
-  //         followerList: followers.map(({ musicbrainz_id }) => {
-  //           return {
-  //             name: musicbrainz_id,
-  //           };
-  //         }),
-  //       });
-  //     }
-  //   );
-  // };
-
-  // getFollowing = () => {
-  //   const { user } = this.props;
-  //   this.APIService.getFollowingForUser(user.name).then(
-  //     ({ following }: { following: Array<{ musicbrainz_id: string }> }) => {
-  //       this.setState({
-  //         followingList: following.map(({ musicbrainz_id }) => {
-  //           return { name: musicbrainz_id };
-  //         }),
-  //       });
-  //     }
-  //   );
-  // };
-
-  // updateMode = (mode: "follower" | "following") => {
-  //   this.setState({ activeMode: mode }, () => {
-  //     const { activeMode } = this.state;
-  //     if (activeMode === "follower") this.getFollowers();
-  //     else this.getFollowing();
-  //   });
-  // };
-
-  // loggedInUserFollowsUser = (user: ListenBrainzUser): boolean => {
-  //   const { followingList } = this.state;
-  //   return _includes(
-  //     followingList.map((listEntry: ListenBrainzUser) => listEntry.name),
-  //     user.name
-  //   );
-  // };
 
   render() {
     const { activeMode } = this.state;

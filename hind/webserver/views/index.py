@@ -31,7 +31,7 @@ def login():
         if user:
             login_user(user, remember=True, duration=timedelta(current_app.config['SESSION_REMEMBER_ME_DURATION']))
             flash.success('Hey there! Welcome back!')
-            return redirect(url_for('user.index'))
+            return redirect(url_for('user.profile'))
 
         flash.error('Username or password incorrect! Please try again')
 
@@ -78,7 +78,7 @@ def signup():
         login_user(user, remember=True, duration=timedelta(current_app.config['SESSION_REMEMBER_ME_DURATION']))
 
         flash.success('Hey there! Welcome to hind!')
-        return redirect(url_for('user.index'))
+        return redirect(url_for('user.profile'))
 
     return render_template(
         "index/auth.html",

@@ -1,3 +1,4 @@
+import logging
 import sqlalchemy
 
 from hind import db
@@ -8,13 +9,14 @@ from pandas import read_sql_query
 def create(blog: Blog) -> int:
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
-            INSERT INTO blog.blog (title, user_id, body, category, upload_res_url, tags)
-                 VALUES (:title, :user_id, :body, :category ,:upload_res_url, :tags)
+            INSERT INTO blog.blog (title, user_id, body, category, location, upload_res_url, tags)
+                 VALUES (:title, :user_id, :body, :category, :location, :upload_res_url, :tags)
               RETURNING id
         """), {
             "title": blog.title,
             "user_id": blog.user_id,
             "category": blog.category,
+            "location": blog.location,
             "body": blog.body,
             "upload_res_url": blog.upload_res_url,
             "tags": blog.tags,
@@ -27,9 +29,11 @@ def create(blog: Blog) -> int:
 def get(id: int):
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
-            SELECT *
+            SELECT title, user_id, body, category, location, upload_res_url, tags, user_name
               FROM blog.blog
-             WHERE id = :blog_id
+              JOIN "user"
+                ON blog.user_id = "user".id
+             WHERE blog.id = :blog_id
         """), {
             "blog_id": id,
         })
@@ -74,6 +78,35 @@ def get_blogs():
         return blogs
 
 
+def get_blogs():
+    with db.engine.connect() as connection:
+        blogs = read_sql_query("""
+            SELECT id, LOWER(title) AS title, category, location, tags
+            FROM blog.blog
+        """, con=connection)
+
+        return blogs
+
+
+def get_blogs_for_user(user_id: int, limit: int, offset: int):
+    with db.engine.connect() as connection:
+        blogs = connection.execute(sqlalchemy.text("""
+            SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url, about
+              FROM blog.blog
+              JOIN "user"
+                ON blog.blog.user_id = "user".id
+             WHERE user_id = :user_id
+             LIMIT :limit
+            OFFSET :offset
+        """), {
+            "user_id": user_id,
+            "limit": limit,
+            "offset": offset
+        })
+
+        return [dict(blog) for blog in blogs]
+
+
 def get_liked_blogs():
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
@@ -95,3 +128,29 @@ def like_blog(user_id: int, blog_id: int):
             "user_id": user_id,
             "blog_id": blog_id,
         })
+
+
+def search(keyword: str, limit: int, offset: int):
+    keyword_with_modulus = "%" + keyword + "%"
+
+    with db.engine.connect() as connection:
+        result = connection.execute(sqlalchemy.text("""
+            SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url, about
+              FROM blog.blog
+              JOIN "user"
+                ON blog.blog.user_id = "user".id
+             WHERE title LIKE :keyword_with_modulus
+                OR location LIKE :keyword_with_modulus
+                OR category::text LIKE :keyword_with_modulus
+                OR :keyword = ANY(tags)
+             LIMIT :limit
+            OFFSET :offset
+        """), {
+            "keyword": keyword,
+            "keyword_with_modulus": keyword_with_modulus,
+            "limit": limit,
+            "offset": offset
+        })
+
+        blogs = [dict(row) for row in result.fetchall()]
+        return blogs

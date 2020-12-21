@@ -21,6 +21,7 @@ class SeedDB():
                         email_id=fake_user['mail'],
                         about=fake.text(),
                         password=fake_user['username'],
+                        profile_picture_url=fake.image_url(),
                         address=(fake_user['address']).replace("\n", " "),
                         )
 

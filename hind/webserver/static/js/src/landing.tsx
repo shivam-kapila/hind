@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import AuthModal from "./auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const Landing = () => {
   return (
@@ -8,13 +9,15 @@ const Landing = () => {
       <div className="landing">
         <h1 className="brand">hind</h1>
         <p>Get a glimpse of Hindustani culture and tradition</p>
-        <form className="form-inline" action="/search" method="GET">
+        <form className="form-inline" action="/blog/search" method="GET">
           <input
             type="text"
             placeholder="Type here to search..."
             name="keyword"
           />
-          <button type="submit">&rarr;</button>
+          <button type="submit" className="circular-button">
+            <FontAwesomeIcon icon={faArrowRight} />
+          </button>
         </form>
         <img
           src="/static/img/pattern.svg"

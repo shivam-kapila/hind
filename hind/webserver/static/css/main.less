@@ -2,72 +2,155 @@
 @import 'base.less';
 @import 'auth.less';
 @import 'landing.less';
+@import 'profile.less';
+@import 'search.less';
 
 .ml-auto {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .mr-auto {
-    margin-right: auto;
+  margin-right: auto;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.mb-auto {
+  margin-bottom: auto;
 }
 
 .card {
-    background: @white;
-    box-sizing: 'border-box';
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08),;
-    border-radius: 8px;
+  background: @white;
+  box-sizing: 'border-box';
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08),;
+  border-radius: 8px;
+  left: 50%;
+  transform: translate(-50%; 0%);
+  padding: 30px;
+
 }
 
 html {
-    height: 100%;
+  height: 100%;
 
-    body {
-        height: 100%;
-        margin: 0;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        font-family: Montserrat, sans-serif;
-        padding-bottom: 100px;
+  body {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Montserrat, sans-serif;
+    
+    .wrapper {
+      padding-bottom: 100px;
     }
+  }
 }
 
 label {
-    color: @dark-gray!important;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 0.6px;
+  color: @dark-gray!important;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.6px;
 }
 
 textarea {
-    border-radius: 4px!important;
-    border: medium none!important;
-    box-sizing: border-box;
-    outline: currentcolor none medium;
-    background-color: @light-gray!important;
-    color:@dark-gray;
-    line-height: 27px!important;
-    padding: 10px;
+  border-radius: 4px!important;
+  border: medium none!important;
+  box-sizing: border-box;
+  outline: currentcolor none medium;
+  background-color: @light-gray!important;
+  color:@dark-gray;
+  line-height: 27px!important;
+  padding: 10px;
 }
 
 input, textarea {
     &:extend(textarea);
-    height: 48px;
+  height: 48px;
 }
 
 
 
 .btn-primary {
-    background-color: @purple!important;
-    width: 100%;
-    margin:10px 0;
-    padding: 10px;
+  background-color: @purple!important;
+  width: 100%;
+  margin:10px 0;
+  padding: 10px;
 
-    &:hover, :focus {
-        background-color: darken(@purple, 5%) !important;
-    }
+  &:hover, :focus {
+    background-color: darken(@purple, 5%) !important;
+  }
 }
 
 .btn-inline {
-    color: @purple;
-    padding-left: 4px;
+  color: @purple;
+  padding-left: 4px;
+}
+
+.pill {
+  background: @peach;
+  border-radius: 20px;
+  padding: 6px 12px;
+}
+
+.pagination-controls {
+   margin-top: 50px;
+   
+   a {
+     text-decoration: none;
+     margin: 10px 40px;
+     border-radius: 4px;
+     width: 100px;
+     display: inline-block;
+     font-size: 14px;
+   }
+}
+
+.circular-button {
+  border-radius: 100%;
+  background-color: @peach;
+  color: @white;
+  margin-left: 10px;
+  font-size: 20px;
+  padding: 5px 10px;
+  border: none;
+}
+
+.blog-card {
+  margin: 20px 0;
+  left: 50%;
+  transform: translate(-50%; 0%);
+  
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+  }
+  .col-10 > * {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  .profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    margin-top: -20px;
+    margin-right: 15px;
+  }
+
+  .col-2 {
+    margin-top: 20px;
+
+    a.circular-button {
+      padding: 8px 10px;
+      margin-top: 10px;
+
+      &:hover{
+        color: @white;
+      }
+    }
+  }
 }

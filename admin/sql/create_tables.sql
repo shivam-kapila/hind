@@ -8,10 +8,12 @@ CREATE TABLE "user" (
   about                 VARCHAR,
   password              VARCHAR,
   address               VARCHAR,
+  profile_picture_url   VARCHAR,
   created               TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   auth_token            VARCHAR
 );
 
+ALTER TABLE "user" ADD CONSTRAINT user_user_name_key UNIQUE (user_name);
 CREATE TABLE blog.blog (
   id                    SERIAL,
   user_id               INT, --FK to "user".id

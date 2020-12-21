@@ -94,7 +94,6 @@ export default class AuthModal extends React.Component<
                 <input
                   type="text"
                   className="form-control"
-                  aria-describedby="emailHelp"
                   name="name"
                   required
                 />
@@ -106,20 +105,18 @@ export default class AuthModal extends React.Component<
                 <input
                   type="text"
                   className="form-control"
-                  aria-describedby="emailHelp"
                   name="user_name"
                   required
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="user_name" className="form-label">
+                <label htmlFor="email_id" className="form-label">
                   Email ID
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   className="form-control"
-                  aria-describedby="emailHelp"
-                  name="email_id  "
+                  name="email_id"
                   required
                 />
               </div>
@@ -130,8 +127,10 @@ export default class AuthModal extends React.Component<
                 <input
                   type="password"
                   className="form-control"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   name="password"
                   required
+                  title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
                 />
               </div>
               <div className="mb-3">

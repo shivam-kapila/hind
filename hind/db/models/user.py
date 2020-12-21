@@ -11,5 +11,6 @@ class User(BaseModel, UserMixin):
     about: str = None
     password: str = None
     address: str = None
+    profile_picture_url: str = 'https://www.kindpng.com/picc/m/22-223965_no-profile-picture-icon-circle-member-icon-png.png'
     created: datetime = None
     auth_token: str = None
