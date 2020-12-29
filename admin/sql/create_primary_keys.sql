@@ -1,6 +1,6 @@
 BEGIN;
 
-ALTER TABLE "user" ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+ALTER TABLE "user".user ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 ALTER TABLE blog.blog ADD CONSTRAINT blog_pkey PRIMARY KEY (id);
 
 COMMIT;
