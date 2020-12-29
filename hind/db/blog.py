@@ -31,8 +31,8 @@ def get(id: int):
         result = connection.execute(sqlalchemy.text("""
             SELECT title, user_id, body, category, location, upload_res_url, tags, user_name
               FROM blog.blog
-              JOIN "user"
-                ON blog.user_id = "user".id
+              JOIN "user".user
+                ON blog.user_id = "user".user.id
              WHERE blog.id = :blog_id
         """), {
             "blog_id": id,
@@ -93,8 +93,8 @@ def get_blogs_for_user(user_id: int, limit: int, offset: int):
         blogs = connection.execute(sqlalchemy.text("""
             SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url, about
               FROM blog.blog
-              JOIN "user"
-                ON blog.blog.user_id = "user".id
+              JOIN "user".user
+                ON blog.blog.user_id = "user".user.id
              WHERE user_id = :user_id
              LIMIT :limit
             OFFSET :offset
@@ -137,8 +137,8 @@ def search(keyword: str, limit: int, offset: int):
         result = connection.execute(sqlalchemy.text("""
             SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url, about
               FROM blog.blog
-              JOIN "user"
-                ON blog.blog.user_id = "user".id
+              JOIN "user".user
+                ON blog.blog.user_id = "user".user.id
              WHERE title LIKE :keyword_with_modulus
                 OR location LIKE :keyword_with_modulus
                 OR category::text LIKE :keyword_with_modulus

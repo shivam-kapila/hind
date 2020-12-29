@@ -9,7 +9,7 @@ from hind.db import logging
 def create(user: User) -> int:
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
-            INSERT INTO "user" (name, user_name, email_id, password, address, about, profile_picture_url, auth_token)
+            INSERT INTO "user".user (name, user_name, email_id, password, address, about, profile_picture_url, auth_token)
                  VALUES (:name, :user_name, :email_id, crypt(:password, gen_salt('bf')), :address, :about, :profile_picture_url, :auth_token)
               RETURNING id
         """), {
@@ -30,7 +30,7 @@ def get(user: User):
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
             SELECT id, name, user_name, email_id, address, auth_token, about, profile_picture_url, created
-              FROM "user"
+              FROM "user".user
              WHERE user_name = :user_name
                AND password = crypt(:password, password);
         """), {
@@ -45,7 +45,7 @@ def get_by_id(id: int):
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
             SELECT id, name, user_name, email_id, address, auth_token, about, profile_picture_url, created
-              FROM "user"
+              FROM "user".user
              WHERE id = :id
         """), {"id": id})
         row = result.fetchone()
@@ -56,7 +56,7 @@ def get_by_user_name(user_name: str):
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
             SELECT id, name, user_name, email_id, address, auth_token, about, profile_picture_url, created
-              FROM "user"
+              FROM "user".user
              WHERE user_name = :user_name
         """), {"user_name": user_name})
         row = result.fetchone()
