@@ -55,7 +55,6 @@ def signup():
         password = request.form.get("password")
         address = request.form.get("address")
         about = request.form.get("user_name")
-        user_id = -1
 
         try:
             user_id = db_user.create(User(

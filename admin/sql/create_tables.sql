@@ -27,7 +27,8 @@ CREATE TABLE blog.blog (
   category              blog_category,
   body                  VARCHAR,
   upload_res_url        VARCHAR,
-  tags                  TEXT[]
+  tags                  TEXT[],
+  created               TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE blog.likes (
