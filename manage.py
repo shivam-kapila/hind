@@ -48,9 +48,6 @@ def init_db(force, create_db):
         print('PG: Creating schema...')
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_schema.sql'))
 
-        print('PG: Creating tyoes...')
-        db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_types.sql'))
-
         print('PG: Creating tables...')
         db.run_sql_script(os.path.join(ADMIN_SQL_DIR, 'create_tables.sql'))
 

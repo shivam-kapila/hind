@@ -10,17 +10,18 @@ RUN apt-get update \
 
 # PostgreSQL client
 RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-ENV PG_MAJOR 12
+ENV PG_MAJOR 13
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     postgresql-client-$PG_MAJOR \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /code
-WORKDIR /code
 
-RUN mkdir /code/hind
+# While WORKDIR will create a directory if it doesn't already exist, we do it explicitly here
+# so that we know what user it is created as: https://github.com/moby/moby/issues/36677
+RUN mkdir -p /code/hind /static
+
 WORKDIR /code/hind
 
 COPY requirements.txt requirements_development.txt /code/hind/
@@ -28,15 +29,18 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 RUN pip3 install --no-cache-dir -r requirements_development.txt
 RUN useradd --create-home --shell /bin/bash hind
 
-RUN mkdir /static
 WORKDIR /static
 
-# Compile static files
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+# Install NodeJS and front-end dependencies
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
-COPY package.json package-lock.json webpack.config.js tsconfig.json ./hind/webserver/static /static/
-RUN npm install  --loglevel verbose && npm run build:prod && ./node_modules/less/bin/lessc --clean-css /static/css/main.less > /static/css/main.css && \
-    rm -rf node_modules js/*.jsx *.json webpack.config.js && npm cache clean --force
+WORKDIR /static
+COPY package.json package-lock.json /static/
+RUN npm install
+
+# Compile front-end (static) files
+COPY webpack.config.js babel.config.js .eslintrc.js tsconfig.json ./hind/webserver/static /static/
+RUN npm run build:prod
 
 # Now install our code, which may change frequently
 COPY . /code/hind/

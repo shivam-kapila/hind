@@ -7,8 +7,6 @@ module.exports = {
     "plugin:react/recommended",
     "airbnb",
     "prettier",
-    "prettier/@typescript-eslint",
-    "prettier/react",
   ],
   globals: {
     Atomics: "readonly",
@@ -28,16 +26,18 @@ module.exports = {
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off",
     "import/extensions": "off",
+    "no-use-before-define": "off",
     camelcase: "warn",
-    "prettier/prettier": "error",
+    "prettier/prettier": "warn",
     "lines-between-class-members": [
       "error",
       "always",
       { exceptAfterSingleLine: true },
     ],
     "jsx-a11y/label-has-associated-control": ['error', {
-      "assert":"either"
+      "assert": "either"
     }],
+    "react/static-property-placement": ["error", "static public field"],
   },
   settings: {
     "import/resolver": {

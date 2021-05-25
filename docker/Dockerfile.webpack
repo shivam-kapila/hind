@@ -1,13 +1,8 @@
-FROM node:10.15-alpine AS hind-webpack-base
+FROM node:16-alpine AS hind-webpack-base
 
 RUN mkdir /code
 WORKDIR /code
 
-COPY package.json package-lock.json webpack.config.js babel.config.js tsconfig.json .eslintrc.js .gitignore /code/
-RUN npm install --loglevel verbose
-
-# When running in CI, we can't mount source into a container at runtime,
-# so we have a target here to add source to the image at build-time
-FROM hind-webpack-base AS hind-webpack-with-source
-
-COPY ./hind/webserver/static /code/static/
+COPY package.json package-lock.json /code/
+RUN npm install
+COPY webpack.config.js babel.config.js tsconfig.json .eslintrc.js /code/

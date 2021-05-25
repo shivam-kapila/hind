@@ -8,7 +8,7 @@ volumes:
 services:
 
   db:
-    image: postgres:12.3
+    image: postgres:13.2
     volumes:
       - postgres:/var/lib/postgresql/data:z
     environment:
