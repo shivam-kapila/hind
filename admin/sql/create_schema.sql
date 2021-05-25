@@ -1,6 +1,8 @@
 BEGIN;
 
-CREATE SCHEMA blog;
 CREATE SCHEMA "user";
+CREATE SCHEMA blog;
+CREATE SCHEMA product;
+CREATE SCHEMA discussion;
 
 COMMIT;

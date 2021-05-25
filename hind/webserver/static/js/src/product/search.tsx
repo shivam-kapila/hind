@@ -2,23 +2,25 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import BlogCard from "./components/BlogCard";
+import BlogCard from "../components/BlogCard";
+import ProductCard from "../components/ProductCard";
 
-type searchProps = {
+type productProps = {
   blogs: [];
+  products: [];
   limit: number;
   offset: number;
 };
 
-const Search = (props: searchProps) => {
-  const { blogs, limit, offset } = props;
+const Product = (props: productProps) => {
+  const { blogs, products, limit, offset } = props;
   const keyword =
     new URL(window.location.href).searchParams.get("keyword") || undefined;
   return (
-    <div className="search">
+    <div className="product">
       <form
         className="form-inline text-center mb-5"
-        action="/blog/search"
+        action="/product/search"
         method="GET"
       >
         <input
@@ -32,9 +34,18 @@ const Search = (props: searchProps) => {
         </button>
       </form>
 
-      {blogs.map((blog: any) => {
-        return <BlogCard blog={blog} key={`${blog.id}`} />;
-      })}
+      <div className="row justify-content-md-center">
+        {blogs.map((blog: any) => (
+          <BlogCard blog={blog} key={`${blog.id}`} />
+        ))}
+      </div>
+
+      <div className="row justify-content-md-center">
+        {products.map((product: any) => (
+          <ProductCard product={product} key={`${product.id}`} />
+        ))}
+      </div>
+
       <div className="pagination-controls text-center">
         <a
           href={`${window.location.href}&limit=${limit}&offset=${
@@ -62,8 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const propsElement = document.getElementById("react-props");
   const reactProps = JSON.parse(propsElement!.innerHTML);
   ReactDOM.render(
-    <Search
+    <Product
       blogs={reactProps.blogs}
+      products={reactProps.products}
       limit={reactProps.limit}
       offset={reactProps.offset}
     />,

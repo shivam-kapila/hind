@@ -1,4 +1,5 @@
 import sqlalchemy
+import sqlalchemy
 import uuid
 
 from hind import db
@@ -22,7 +23,6 @@ def create(user: User) -> int:
             "profile_picture_url": user.profile_picture_url,
             "auth_token": str(uuid.uuid4()),
         })
-        logging.error(user.profile_picture_url)
         return result.fetchone()["id"]
 
 

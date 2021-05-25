@@ -29,7 +29,7 @@ def create(blog: Blog) -> int:
 def get(id: int):
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
-            SELECT title, user_id, body, category, location, upload_res_url, tags, user_name
+            SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url
               FROM blog.blog
               JOIN "user".user
                 ON blog.user_id = "user".user.id
@@ -45,7 +45,7 @@ def get(id: int):
 
         result = connection.execute(sqlalchemy.text("""
             SELECT count(*) as likes
-              FROM blog.likes
+              FROM blog.like
              WHERE blog_id = :blog_id
         """), {
             "blog_id": id,
@@ -58,7 +58,7 @@ def get(id: int):
 def insert_recommendation(user_id: int, blog_id: int):
     with db.engine.connect() as connection:
         connection.execute(sqlalchemy.text("""
-            INSERT INTO blog.recommendations (user_id, blog_id)
+            INSERT INTO blog.recommendation (user_id, blog_id)
                  VALUES (:user_id, :blog_id)
             ON CONFLICT (user_id, blog_id)
              DO NOTHING
@@ -68,30 +68,27 @@ def insert_recommendation(user_id: int, blog_id: int):
         })
 
 
-def get_blogs():
+def get_blogs(limit: int, offset: int):
     with db.engine.connect() as connection:
-        blogs = read_sql_query("""
-            SELECT id, LOWER(title) AS title, category, location, tags
-            FROM blog.blog
-        """, con=connection)
+        blogs = connection.execute(sqlalchemy.text("""
+            SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url
+              FROM blog.blog
+              JOIN "user".user
+                ON blog.blog.user_id = "user".user.id
+             LIMIT :limit
+            OFFSET :offset
+        """), {
+            "limit": limit,
+            "offset": offset
+        })
 
-        return blogs
-
-
-def get_blogs():
-    with db.engine.connect() as connection:
-        blogs = read_sql_query("""
-            SELECT id, LOWER(title) AS title, category, location, tags
-            FROM blog.blog
-        """, con=connection)
-
-        return blogs
+        return [dict(blog) for blog in blogs]
 
 
 def get_blogs_for_user(user_id: int, limit: int, offset: int):
     with db.engine.connect() as connection:
         blogs = connection.execute(sqlalchemy.text("""
-            SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url, about
+            SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url
               FROM blog.blog
               JOIN "user".user
                 ON blog.blog.user_id = "user".user.id
@@ -111,7 +108,7 @@ def get_liked_blogs():
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
             SELECT blog_id, user_id
-            FROM blog.likes
+            FROM blog.like
         """), con=connection)
 
         return [dict(r) for r in result.fetchall()]
@@ -120,7 +117,7 @@ def get_liked_blogs():
 def like_blog(user_id: int, blog_id: int):
     with db.engine.connect() as connection:
         connection.execute(sqlalchemy.text("""
-            INSERT INTO blog.likes (user_id, blog_id)
+            INSERT INTO blog.like (user_id, blog_id)
                  VALUES (:user_id, :blog_id)
             ON CONFLICT (user_id, blog_id)
              DO NOTHING
@@ -135,13 +132,13 @@ def search(keyword: str, limit: int, offset: int):
 
     with db.engine.connect() as connection:
         result = connection.execute(sqlalchemy.text("""
-            SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url, about
+            SELECT blog.id, title, user_id, body, category, location, upload_res_url, tags, user_name, name, profile_picture_url
               FROM blog.blog
               JOIN "user".user
                 ON blog.blog.user_id = "user".user.id
-             WHERE title LIKE :keyword_with_modulus
-                OR location LIKE :keyword_with_modulus
-                OR category::text LIKE :keyword_with_modulus
+             WHERE LOWER(title) LIKE :keyword_with_modulus
+                OR LOWER(location) LIKE :keyword_with_modulus
+                OR LOWER(category::text) LIKE :keyword_with_modulus
                 OR :keyword = ANY(tags)
              LIMIT :limit
             OFFSET :offset

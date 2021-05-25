@@ -1,0 +1,33 @@
+.blog  {
+  p { 
+    word-break:normal;
+    text-align: left;
+    line-height: 28px;
+  }
+
+  .col-2 {
+    position: fixed;
+    padding: 20vh 7vw 0 0;
+    > div > *{
+        display: inline-block;
+    }
+
+    hr {
+      background: @gray; 
+    }
+
+    .fa-heart {
+      stroke: @gray;
+      color: @white;
+      stroke-width: 40px;
+    }
+  }
+
+  .col-10 {
+    padding-left: 50px;
+    img {
+      width: 100%;
+      border-radius: 8px;
+  }
+  }
+}

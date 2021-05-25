@@ -66,6 +66,8 @@ def _register_blueprints(app):
     from hind.webserver.views.index import index_bp
     from hind.webserver.views.user import user_bp
     from hind.webserver.views.blog import blog_bp
+    from hind.webserver.views.product import product_bp
     app.register_blueprint(index_bp)
     app.register_blueprint(user_bp, url_prefix='/user')
-    app.register_blueprint(blog_bp, url_prefix='/blog')
+    app.register_blueprint(blog_bp, url_prefix='/blogs')
+    app.register_blueprint(product_bp, url_prefix='/products')

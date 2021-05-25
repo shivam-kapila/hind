@@ -1,10 +1,14 @@
 import ujson
-import hind.db.user as db_user
 from datetime import timedelta
-from hind.db.models.user import User
-from hind.webserver import flash
 from flask import Blueprint, render_template, current_app, redirect, request, url_for, session
 from flask_login import current_user, login_user, login_required, logout_user
+
+import hind.db.user as db_user
+import hind.db.blog as db_blog
+import hind.db.product as db_product
+from hind.db.models.user import User
+from hind.webserver import flash
+from hind.webserver.views.api_tools import _get_non_negative_param
 
 index_bp = Blueprint('index', __name__)
 
@@ -54,7 +58,6 @@ def signup():
         email_id = request.form.get("email_id")
         password = request.form.get("password")
         address = request.form.get("address")
-        about = request.form.get("user_name")
 
         try:
             user_id = db_user.create(User(
@@ -63,11 +66,10 @@ def signup():
                 password=password,
                 email_id=email_id,
                 address=address,
-                about=about
             ))
 
         except Exception as e:
-            flash.error(e)
+            flash.error(e._message)
             return render_template(
                 "index/auth.html",
                 props=ujson.dumps(props),
@@ -91,3 +93,45 @@ def logout():
     session.clear()
     logout_user()
     return redirect(url_for('index.index'))
+
+
+@index_bp.route("/search")
+def search():
+    keyword = request.args.get("keyword")
+    search_type = request.args.get("type")
+    limit = _get_non_negative_param("limit", default=5)
+    offset = _get_non_negative_param("offset", default=0)
+
+    blogs = []
+    products = []
+
+    if search_type:
+        if search_type == "blog":
+            blogs = db_blog.search(keyword=str.lower(keyword), limit=limit, offset=offset)
+
+        elif search_type == "product":
+            products = db_product.search(keyword=str.lower(keyword), limit=limit, offset=offset)
+
+        else:
+            flash.error("Invalid search type: %s" % search_type)
+            return render_template(
+                "base.html",
+            )
+    else:
+        blogs = db_blog.search(keyword=str.lower(keyword), limit=limit, offset=offset)
+        products = db_product.search(keyword=str.lower(keyword), limit=limit, offset=offset)
+
+    props = {
+        "keyword": keyword,
+        "search_type": search_type,
+        "current_user": current_user,
+        "blogs": blogs,
+        "products": products,
+        "limit": limit,
+        "offset": offset
+    }
+    return render_template(
+        "index/search.html",
+        current_user=current_user,
+        props=ujson.dumps(props),
+    )
