@@ -6,6 +6,7 @@ from flask_login import current_user, login_user, login_required, logout_user
 import hind.db.user as db_user
 import hind.db.blog as db_blog
 import hind.db.product as db_product
+import hind.db.discussion as db_discussion
 from hind.db.models.user import User
 from hind.webserver import flash
 from hind.webserver.views.api_tools import _get_non_negative_param
@@ -104,6 +105,7 @@ def search():
 
     blogs = []
     products = []
+    discussions = []
 
     if search_type:
         if search_type == "blog":
@@ -111,6 +113,9 @@ def search():
 
         elif search_type == "product":
             products = db_product.search(keyword=str.lower(keyword), limit=limit, offset=offset)
+
+        elif search_type == "discussion":
+            discussions = db_discussion.search(keyword=str.lower(keyword), limit=limit, offset=offset)
 
         else:
             flash.error("Invalid search type: %s" % search_type)
@@ -120,6 +125,7 @@ def search():
     else:
         blogs = db_blog.search(keyword=str.lower(keyword), limit=limit, offset=offset)
         products = db_product.search(keyword=str.lower(keyword), limit=limit, offset=offset)
+        discussions = db_discussion.search(keyword=str.lower(keyword), limit=limit, offset=offset)
 
     props = {
         "keyword": keyword,
@@ -127,6 +133,7 @@ def search():
         "current_user": current_user,
         "blogs": blogs,
         "products": products,
+        "discussions": discussions,
         "limit": limit,
         "offset": offset
     }

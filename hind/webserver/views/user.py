@@ -38,7 +38,7 @@ def current_useruser(user_name):
         )
 
     blogs = db_blog.get_blogs_for_user(user_id=user.id, limit=5, offset=0)
-    products = db_product.get_blogs_for_user(user_id=user.id, limit=5, offset=0)
+    products = db_product.get_products_for_user(user_id=user.id, limit=5, offset=0)
     props = {
         "user": dict(user),
         "blogs": blogs,

@@ -45,6 +45,8 @@ module.exports = function (argv) {
       new_blog: path.resolve(jsDir, "src/blog/newBlog.tsx"),
       product: path.resolve(jsDir, "src/product/product.tsx"),
       new_product: path.resolve(jsDir, "src/product/newProduct.tsx"),
+      discussion: path.resolve(jsDir, "src/discussion/discussion.tsx"),
+      new_discussion: path.resolve(jsDir, "src/discussion/newDiscussion.tsx"),
     },
     output: {
       filename: isProd ? "[name].[contenthash].js" : "[name].js",

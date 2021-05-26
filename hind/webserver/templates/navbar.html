@@ -9,16 +9,19 @@
   
   <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      {% if current_user.is_authenticated %}
+      <!-- {% if current_user.is_authenticated %}
         <li class="nav-item active">
           <a class="nav-link" href="{{url_for('index.index') }}">Feed</a>
         </li>
-      {% endif %}
+      {% endif %} -->
         <li class="nav-item active">
           <a class="nav-link" href="{{url_for('blogs.index') }}">Blogs</a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="{{url_for('products.index') }}">Products</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{url_for('discussions.index') }}">Discussions</a>
         </li>
     </ul>
     <ul class="navbar-nav">
@@ -31,6 +34,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="{{url_for('blogs.new') }}">Post a New Blog</a></li>
             <li><a class="dropdown-item" href="{{url_for('products.new') }}">Add a New Product</a></li>
+            <li><a class="dropdown-item" href="{{url_for('discussions.new') }}">Create a New Discussion</a></li>
           </ul>
         </li>
 

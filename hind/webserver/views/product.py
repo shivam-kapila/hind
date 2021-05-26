@@ -1,7 +1,7 @@
 import ujson
 
 import hind.db.product as db_product
-from flask import Blueprint, render_template, current_app, request
+from flask import Blueprint, render_template, current_app, request, redirect, url_for
 from flask_login import current_user, login_required
 from hind.webserver.views.api_tools import _get_non_negative_param
 from hind.db.models.product import Product
@@ -56,6 +56,7 @@ def new():
                 upload_res_url="https://placeimg.com/152/97/any",
                 tags=["food"]
             ))
+            return redirect(url_for('products.product', product_id=product_id))
 
         except Exception as e:
             flash.error(e)

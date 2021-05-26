@@ -3,17 +3,17 @@ import * as ReactDOM from "react-dom";
 
 import APIService from "../APIService";
 
-export type NewBlogProps = {};
+export type NewDiscussionProps = {};
 
-type NewBlogState = {};
+type NewDiscussionState = {};
 
-export default class NewBlog extends React.Component<
-  NewBlogProps,
-  NewBlogState
+export default class NewDiscussion extends React.Component<
+  NewDiscussionProps,
+  NewDiscussionState
 > {
   APIService: APIService;
 
-  constructor(props: NewBlogProps) {
+  constructor(props: NewDiscussionProps) {
     super(props);
     this.APIService = new APIService(`${window.location.origin}`);
   }
@@ -26,8 +26,8 @@ export default class NewBlog extends React.Component<
   render() {
     return (
       <div>
-        <h4>Create a new Blog</h4>
-        <form action="/blogs/new" method="POST">
+        <h4>Create a new Discussion</h4>
+        <form action="/discussions/new" method="POST">
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Title
@@ -41,14 +41,8 @@ export default class NewBlog extends React.Component<
             <input type="text" className="form-control" name="tags" required />
           </div>
           <div className="mb-3">
-            <label htmlFor="location" className="form-label">
-              Location
-            </label>
-            <input type="text" className="form-control" name="location" />
-          </div>
-          <div className="mb-3">
             <label htmlFor="about" className="form-label">
-              Blog Body
+              Discussion Body
             </label>
             <textarea className="form-control" name="body" rows={40} />
           </div>
@@ -66,5 +60,5 @@ document.addEventListener("DOMContentLoaded", () => {
   const domContainer = document.querySelector("#react-container");
   //   const propsElement = document.getElementById("react-props");
   //   const reactProps = JSON.parse(propsElement!.innerHTML);
-  ReactDOM.render(<NewBlog />, domContainer);
+  ReactDOM.render(<NewDiscussion />, domContainer);
 });

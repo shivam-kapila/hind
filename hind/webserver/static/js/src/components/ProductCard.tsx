@@ -52,7 +52,7 @@ const ProductCard = (props: productCardProps) => {
               <a
                 type="submit"
                 className="circular-button mt-3"
-                href={`/product/${product.id}`}
+                href={`/products/${product.id}`}
               >
                 <FontAwesomeIcon icon={faArrowRight} />
               </a>

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import BlogCard from "../components/BlogCard";
+import DiscussionCard from "../components/DiscussionCard";
 import ProductCard from "../components/ProductCard";
 
 type searchProps = {
@@ -10,12 +11,14 @@ type searchProps = {
   searchType: string;
   blogs: [];
   products: [];
+  discussions: [];
   limit: number;
   offset: number;
 };
 
 const Search = (props: searchProps) => {
-  const { blogs, products, limit, offset, searchType, keyword } = props;
+  const { blogs, products, discussions, limit, offset, searchType, keyword } =
+    props;
 
   let baseURL = `${window.location.protocol}//${
     window.location.host
@@ -48,24 +51,45 @@ const Search = (props: searchProps) => {
           <FontAwesomeIcon icon={faArrowRight} />
         </button>
       </form>
-      {(!blogs || !blogs.length) && (!products || !products.length) ? (
-        <p className="text-center"> No more results to display </p>
+      {(!blogs || !blogs.length) &&
+      (!products || !products.length) &&
+      (!discussions || !discussions.length) ? (
+        <p className="text-center text-muted"> No more results to display </p>
       ) : (
         <>
           {blogs && (
-            <div className="row justify-content-md-center">
-              {blogs.map((blog: any) => (
-                <BlogCard blog={blog} key={`${blog.id}`} />
-              ))}
-            </div>
+            <>
+              <h4 className="text-muted text-center mt-5 mb-2">Blogs</h4>
+              <div className="row justify-content-md-center">
+                {blogs.map((blog: any) => (
+                  <BlogCard blog={blog} key={`${blog.id}`} />
+                ))}
+              </div>
+            </>
           )}
           {products && (
-            <div className="row justify-content-md-center">
-              {products.map((product: any) => (
-                <ProductCard product={product} key={`${product.id}`} />
-              ))}
-            </div>
+            <>
+              <h4 className="text-muted text-center mt-5 mb-2">Products</h4>
+              <div className="row justify-content-md-center">
+                {products.map((product: any) => (
+                  <ProductCard product={product} key={`${product.id}`} />
+                ))}
+              </div>
+            </>
           )}
+          {discussions && (
+            <>
+              <h4 className="text-muted text-center mt-5 mb-2">Discussions</h4>
+              <div className="row justify-content-md-center">
+                {discussions.map((discussion: any) => (
+                  <DiscussionCard
+                    discussion={discussion}
+                    key={`${discussion.id}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}{" "}
           <div className="pagination-controls text-center">
             {offset > 0 && (
               <a
@@ -98,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
       searchType={reactProps.search_type}
       blogs={reactProps.blogs}
       products={reactProps.products}
+      discussions={reactProps.discussions}
       limit={reactProps.limit}
       offset={reactProps.offset}
     />,

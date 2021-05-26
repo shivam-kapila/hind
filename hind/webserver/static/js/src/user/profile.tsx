@@ -28,23 +28,30 @@ const Profile = (props: profileProps) => {
           <p>{user.about}</p>
         </div>
       </div>
-      <div className="row justify-content-md-center">
-        <h4 className="text-muted text-center mt-5 mb-2">
-          Some blogs penned down by me
-        </h4>
-        {blogs.map((blog: any) => (
-          <>
-            <BlogCard blog={blog} key={`${blog.id}`} pageType="user" />
-          </>
-        ))}
-        <div className="row justify-content-md-center">
-          {products.map((blog: any) => (
-            <>
-              <ProductCard product={blog} key={`${blog.id}`} pageType="user" />
-            </>
-          ))}
-        </div>
-      </div>
+      {blogs && (
+        <>
+          <h4 className="text-muted text-center mt-5 mb-2">
+            Some blogs penned down by me
+          </h4>
+          <div className="row justify-content-md-center">
+            {blogs.map((blog: any) => (
+              <BlogCard blog={blog} key={`${blog.id}`} />
+            ))}
+          </div>
+        </>
+      )}
+      {products && (
+        <>
+          <h4 className="text-muted text-center mt-5 mb-2">
+            Some products by me
+          </h4>
+          <div className="row justify-content-md-center">
+            {products.map((product: any) => (
+              <ProductCard product={product} key={`${product.id}`} />
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 };

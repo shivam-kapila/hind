@@ -22,7 +22,7 @@ export default class NewProduct extends React.Component<
     return (
       <div>
         <h4>Add a new Product</h4>
-        <form action="/product/new" method="POST">
+        <form action="/products/new" method="POST">
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
               Title

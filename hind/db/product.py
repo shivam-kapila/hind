@@ -55,13 +55,13 @@ def get(id: int):
             SELECT bid.id
                  , starting_bid
                  , bidding_date
-                 , bid_amount
+                 , starting_bid
                  , user_name
                  , "user".name AS name_of_user
                  , profile_picture_url
-              FROM product.bid
+              FROM product.bid, product.product
               JOIN "user".user
-                ON product.bid.buyer_id = "user".user.id
+                ON product.product.seller_id = "user".user.id
              WHERE product_id = :product_id
           ORDER BY bidding_date DESC
         """), {

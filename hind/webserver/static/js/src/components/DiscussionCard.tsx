@@ -3,28 +3,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import Card from "./Card";
 
-const MAX_BLOG_BODY_LENGTH = 100;
+const MAX_DISCUSSION_BODY_LENGTH = 100;
 
 type pageTypes = "search" | "user";
 
-type blogCardProps = {
-  blog: any;
+type discussionCardProps = {
+  discussion: any;
   pageType?: pageTypes;
 };
 
-const BlogCard = (props: blogCardProps) => {
-  const { blog, pageType } = props;
+const DiscussionCard = (props: discussionCardProps) => {
+  const { discussion, pageType } = props;
   return (
-    <Card className="col-md-8 blog-card">
+    <Card className="col-md-8 discussion-card">
       <div className="row">
-        <div className="col-4">
-          <img src={blog.upload_res_url} alt="" className="img-fluid" />
-        </div>
-        <div className="col-8">
+        <div className="col-12">
           <div>
-            <h4>{blog.title}</h4>
+            <h4>{discussion.title}</h4>
             <p className="text-muted">
-              {blog.body.substring(0, MAX_BLOG_BODY_LENGTH)}...
+              {discussion.body.substring(0, MAX_DISCUSSION_BODY_LENGTH)}...
             </p>
           </div>
           <div className="row mt-auto">
@@ -32,19 +29,19 @@ const BlogCard = (props: blogCardProps) => {
               {pageType === "search" ? (
                 <>
                   <img
-                    src={blog.profile_picture_url}
+                    src={discussion.profile_picture_url}
                     alt=""
                     className="img-fluid profile-picture"
                   />
                   <p className="mt-3">
-                    {blog.user_name}
+                    {discussion.user_name}
                     <br />
-                    <span className="text-muted">{blog.name}</span>
+                    <span className="text-muted">{discussion.name}</span>
                   </p>
                 </>
               ) : (
                 <span className="badge badge-pill pill mt-4">
-                  {blog.category}
+                  {discussion.category}
                 </span>
               )}
             </div>
@@ -52,7 +49,7 @@ const BlogCard = (props: blogCardProps) => {
               <a
                 type="submit"
                 className="circular-button mt-3"
-                href={`/blogs/${blog.id}`}
+                href={`/discussions/${discussion.id}`}
               >
                 <FontAwesomeIcon icon={faArrowRight} />
               </a>
@@ -64,7 +61,7 @@ const BlogCard = (props: blogCardProps) => {
   );
 };
 
-BlogCard.defaultProps = {
+DiscussionCard.defaultProps = {
   pageType: "search",
 };
-export default BlogCard;
+export default DiscussionCard;

@@ -1,7 +1,7 @@
 import ujson
 
 import hind.db.blog as db_blog
-from flask import Blueprint, render_template, current_app, request
+from flask import Blueprint, render_template, current_app, request, redirect, url_for
 from flask_login import current_user, login_required
 from hind.webserver.views.api_tools import _get_non_negative_param
 from hind.db.models.blog import Blog
@@ -49,11 +49,12 @@ def new():
                 upload_res_url="https://placeimg.com/152/97/any",
                 tags=["food"]
             ))
+            return redirect(url_for('blogs.blog', blog_id=blog_id))
 
         except Exception as e:
             flash.error(e)
             return render_template(
-                "blog/blog.html",
+                "blog/new_blog.html",
             )
     return render_template(
         "blog/new_blog.html",

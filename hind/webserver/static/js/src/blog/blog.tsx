@@ -39,20 +39,24 @@ const Blog = (props: BlogProps) => {
             View Profile
           </a>
 
-          <hr className="mt-4 mb-4" />
+          {/* <hr className="mt-4 mb-4" />
           <span className="text-muted">
             <FontAwesomeIcon icon={faHeart} /> {blog.like}
-          </span>
+          </span> */}
         </div>
         <div className="col-10 offset-2">
           <h1>{blog.title}</h1>
           <div className="mt-5">
             <img src={blog.upload_res_url} alt="blog cover" height="500px" />
           </div>
-          <div className="mt-5 mb-3">
+          <span className="badge badge-pill pill mt-5 mb-3">
+            {blog.category}
+          </span>
+          <div className="mb-3">
             {blog.tags.map((tag: string) => (
               <span className="badge badge-pill pill secondary" key={tag}>
                 {tag}
+                {"  "}
               </span>
             ))}
           </div>
