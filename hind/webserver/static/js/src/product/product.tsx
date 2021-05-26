@@ -55,11 +55,6 @@ export default class Product extends React.Component<
             >
               View Profile
             </a>
-
-            <hr className="mt-4 mb-4" />
-            <span className="text-muted">
-              <FontAwesomeIcon icon={faHeart} /> {product.like}
-            </span>
           </div>
           <div className="col-md-5 offset-2">
             <h1>{product.title}</h1>

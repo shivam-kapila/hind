@@ -12,3 +12,4 @@ class Discussion(BaseModel):
     location: str = None
     body: str
     tags: list
+    comments: list

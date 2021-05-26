@@ -5,7 +5,7 @@ from pydantic import BaseModel
 class Product(BaseModel):
     id: int = None
     name: str
-    user_id: int
+    seller_id: int
     user_name: str = None
     name_of_user: str = None
     profile_picture_url: str = None

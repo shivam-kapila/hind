@@ -1,3 +1,4 @@
+import * as timeago from "time-ago";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
@@ -42,13 +43,88 @@ const Discussion = (props: DiscussionProps) => {
         <div className="col-10 offset-2">
           <h1>{discussion.title}</h1>
           <p className="mt-1">{discussion.body}</p>
-          <div className="mt-2 mb-3">
+          <div className="mt-2 mb-5">
             {discussion.tags.map((tag: string) => (
               <span className="badge badge-pill pill secondary" key={tag}>
                 {tag}
               </span>
             ))}
           </div>
+          <h5 className="text-center text-muted">COMMENTS</h5>
+          <hr />
+          <form action={`/discussions/${discussion.id}/comment`} method="post">
+            <input
+              type="text"
+              placeholder="Add a comment"
+              name="body"
+              defaultValue=""
+            />
+            <button type="submit" className="btn btn-sm btn-primary">
+              Comment
+            </button>
+          </form>
+          {discussion.comments.map((comment: any) => (
+            <div className="mt-2" key={comment.id}>
+              <div className="comment">
+                <i>
+                  <small className="text-muted float-end">
+                    {new Date(comment.created * 1000).toLocaleString(
+                      undefined,
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      }
+                    )}
+                  </small>
+                </i>
+                <b>
+                  <p className="bold">{comment.name}</p>
+                </b>
+                {comment.body}
+                <div className="col-11 offset-1">
+                  <form
+                    action={`/discussions/${discussion.id}/comment/${comment.id}/comment`}
+                    method="post"
+                  >
+                    <input
+                      type="text"
+                      placeholder="Add a sub comment"
+                      name="body"
+                      defaultValue=""
+                    />
+                    <button type="submit" className="btn btn-sm btn-primary">
+                      Comment
+                    </button>
+                  </form>
+                  {comment.sub_comments.map((subComment: any) => (
+                    <div className="mt-5" key={subComment.id}>
+                      <i>
+                        <small className="text-muted float-end">
+                          {new Date(subComment.created * 1000).toLocaleString(
+                            undefined,
+                            {
+                              day: "2-digit",
+                              month: "short",
+                              hour: "numeric",
+                              minute: "numeric",
+                              hour12: true,
+                            }
+                          )}
+                        </small>
+                      </i>
+                      <b>
+                        <p className="bold">{subComment.name}</p>
+                      </b>
+                      {subComment.body}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

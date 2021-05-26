@@ -56,12 +56,7 @@ def get(id: int):
                  , starting_bid
                  , bidding_date
                  , starting_bid
-                 , user_name
-                 , "user".name AS name_of_user
-                 , profile_picture_url
               FROM product.bid, product.product
-              JOIN "user".user
-                ON product.product.seller_id = "user".user.id
              WHERE product_id = :product_id
           ORDER BY bidding_date DESC
         """), {

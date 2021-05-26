@@ -2,7 +2,7 @@ import sqlalchemy
 
 from hind import db
 from hind.db.models.discussion import Discussion
-
+import logging
 
 def create(thread: Discussion) -> int:
     with db.engine.connect() as connection:
@@ -35,7 +35,46 @@ def get(id: int):
             "thread_id": id,
         })
         row = result.fetchone()
-        return dict(row) if row else None
+        if not row:
+            return None
+
+        discussion = dict(row)
+        c = connection.execute(sqlalchemy.text("""
+               SELECT comment.id
+                    , body
+                    , comment.created
+                    , user_name
+                    , name
+                    , profile_picture_url
+                FROM discussion.comment
+                JOIN "user".user
+                  ON discussion.comment.user_id = "user".user.id
+                WHERE thread_id = :thread_id
+            ORDER BY created DESC
+        """), {
+            "thread_id": discussion["id"],
+        })
+        comments = [dict(r) for r in c.fetchall()]
+        for comment in comments:
+            sub_comments = connection.execute(sqlalchemy.text("""
+            SELECT comment_comment.id
+                 , body
+                 , discussion.comment_comment.created
+                 , user_name
+                 , name
+                 , profile_picture_url
+              FROM discussion.comment_comment
+              JOIN "user".user
+                ON discussion.comment_comment.user_id = "user".user.id
+                WHERE comment_id = :comment_id
+            ORDER BY created DESC
+        """), {
+                "comment_id": comment["id"],
+            })
+            comment["sub_comments"] = [dict(r) for r in sub_comments.fetchall()]
+        discussion["comments"] = comments
+
+    return Discussion(**dict(discussion)) if discussion else None
 
 
 def insert_recommendation(user_id: int, thread_id: int):

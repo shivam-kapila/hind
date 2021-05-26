@@ -29,7 +29,7 @@ def discussion(thread_id):
     )
 
 
-@discussion_bp.route("/<int:thread_id>/comment")
+@discussion_bp.route("/<int:thread_id>/comment", methods=["POST"])
 @login_required
 def comment(thread_id):
     body = request.form.get("body")
@@ -42,7 +42,7 @@ def comment(thread_id):
     return redirect(url_for('discussions.discussion', thread_id=thread_id))
 
 
-@discussion_bp.route("/<int:thread_id>/comment/<int:comment_id>/comment")
+@discussion_bp.route("/<int:thread_id>/comment/<int:comment_id>/comment", methods=["POST"])
 @login_required
 def sub_comment(thread_id, comment_id):
     body = request.form.get("body")
